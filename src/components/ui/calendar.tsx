@@ -55,6 +55,24 @@ function Calendar({
       components={{
         IconLeft: ({ ..._props }) => <ChevronLeft className="h-4 w-4" />,
         IconRight: ({ ..._props }) => <ChevronRight className="h-4 w-4" />,
+        DayContent: (props) => (
+          <div className="w-full h-full flex justify-center items-center">
+            {props.date.getDate()}
+          </div>
+        ),
+        // The Day component needs to explicitly set type="button" on the button element
+        Day: (day) => (
+          <button
+            type="button"
+            className={cn(
+              buttonVariants({ variant: "ghost" }),
+              "h-9 w-9 p-0 font-normal aria-selected:opacity-100"
+            )}
+            {...day}
+          >
+            {day.date.getDate()}
+          </button>
+        ),
       }}
       {...props}
     />
