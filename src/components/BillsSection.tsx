@@ -13,8 +13,8 @@ import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import * as React from "react";
+import { DayProps } from "react-day-picker";
 
-// Define bill type
 interface Bill {
   id: string;
   name: string;
@@ -49,7 +49,6 @@ export default function BillsSection() {
       }));
     }
     
-    // Default bills
     return [
       {
         id: "1",
@@ -121,10 +120,8 @@ export default function BillsSection() {
   const [viewMode, setViewMode] = useState<"list" | "calendar">("list");
 
   useEffect(() => {
-    // Save bills to local storage
     localStorage.setItem('bills', JSON.stringify(bills));
     
-    // Check for due bills and show notifications
     const today = new Date();
     const dueSoon = bills.filter(bill => 
       !bill.isPaid && 
@@ -138,36 +135,29 @@ export default function BillsSection() {
       dueSoon.forEach(bill => {
         if (isToday(bill.dueDate)) {
           console.log(`Bill due today: ${bill.name}`);
-          // This would be where you'd show a notification if you had a notification system
         }
       });
     }
   }, [bills]);
 
-  // Get upcoming bills (due in the next 30 days)
   const upcomingBills = [...bills]
     .filter(bill => !bill.isPaid && isBefore(bill.dueDate, addDays(new Date(), 30)))
     .sort((a, b) => compareAsc(a.dueDate, b.dueDate));
 
-  // Get overdue bills
   const overdueBills = [...bills]
     .filter(bill => !bill.isPaid && isBefore(bill.dueDate, new Date()))
     .sort((a, b) => compareAsc(a.dueDate, b.dueDate));
   
-  // Get bills due today
   const todayBills = upcomingBills.filter(bill => isToday(bill.dueDate));
   
-  // Get paid bills
   const paidBills = [...bills]
     .filter(bill => bill.isPaid)
-    .sort((a, b) => compareAsc(b.dueDate, a.dueDate)); // Most recent first
+    .sort((a, b) => compareAsc(b.dueDate, a.dueDate));
   
-  // Get bills for the selected date (if in calendar view)
   const selectedDateBills = selectedDate 
     ? bills.filter(bill => isSameDay(bill.dueDate, selectedDate))
     : [];
   
-  // Calculate days with bills for the calendar
   const daysWithBills = eachDayOfInterval({
     start: startOfMonth(calendarDate),
     end: endOfMonth(calendarDate)
@@ -380,7 +370,6 @@ export default function BillsSection() {
         </div>
       </div>
       
-      {/* Summary Cards */}
       <div className="grid gap-4 md:grid-cols-4">
         <Card className="finance-card">
           <CardHeader className="py-4">
@@ -681,7 +670,8 @@ export default function BillsSection() {
                   onMonthChange={setCalendarDate}
                   className="rounded-md border"
                   components={{
-                    Day: ({ date, ...props }) => {
+                    Day: (props: DayProps) => {
+                      const { date, disabled, outside } = props;
                       const hasBills = bills.some(bill => isSameDay(bill.dueDate, date));
                       const hasOverdueBills = bills.some(bill => 
                         !bill.isPaid && isSameDay(bill.dueDate, date) && isBefore(date, new Date())
@@ -690,26 +680,33 @@ export default function BillsSection() {
                         !bill.isPaid && isSameDay(bill.dueDate, date) && isToday(date)
                       );
                       
+                      const isSelected = selectedDate ? isSameDay(date, selectedDate) : false;
+                      
                       return (
                         <div className="relative">
-                          {hasBills && !props.selected && (
+                          {hasBills && !isSelected && (
                             <div className={cn(
                               "w-1.5 h-1.5 rounded-full absolute -top-0.5 right-0",
                               hasOverdueBills ? "bg-finance-red" : hasDueTodayBills ? "bg-finance-yellow" : "bg-finance-indigo"
                             )} />
                           )}
-                          <div
-                            {...props}
+                          <button
+                            type="button"
                             className={cn(
-                              props.className,
+                              "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
+                              buttonVariants({ variant: "ghost" }),
                               hasBills && !hasOverdueBills && !hasDueTodayBills && "!bg-finance-indigo/10 text-finance-indigo hover:bg-finance-indigo/20 focus:bg-finance-indigo/20",
                               hasOverdueBills && "!bg-finance-red/10 text-finance-red hover:bg-finance-red/20 focus:bg-finance-red/20",
                               hasDueTodayBills && "!bg-finance-yellow/10 text-finance-yellow hover:bg-finance-yellow/20 focus:bg-finance-yellow/20",
-                              props.selected && "!bg-finance-indigo text-white hover:!bg-finance-indigo hover:text-white focus:!bg-finance-indigo focus:text-white"
+                              isSelected && "!bg-finance-indigo text-white hover:!bg-finance-indigo hover:text-white focus:!bg-finance-indigo focus:text-white",
+                              outside && "text-muted-foreground opacity-50",
+                              disabled && "text-muted-foreground opacity-50 cursor-not-allowed"
                             )}
+                            disabled={disabled}
+                            {...props}
                           >
-                            {props.children}
-                          </div>
+                            {format(date, "d")}
+                          </button>
                         </div>
                       );
                     },
