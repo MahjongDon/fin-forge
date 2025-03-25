@@ -70,6 +70,12 @@ export default {
 					red: '#EF4444',
 					yellow: '#F59E0B',
 					blue: '#3B82F6'
+				},
+				gray: {
+					300: '#CBD5E0',
+					700: '#4A5568',
+					800: '#2D3748',
+					900: '#1A202C'
 				}
 			},
 			borderRadius: {

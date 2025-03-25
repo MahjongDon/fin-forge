@@ -111,7 +111,7 @@
   }
   
   .subtle-scroll {
-    @apply scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-transparent;
+    @apply scrollbar-thin;
   }
 }
 
@@ -129,11 +129,11 @@
   }
   
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    background: #CBD5E0;
+    background: theme('colors.gray.300');
     border-radius: 20px;
   }
   
   .dark .scrollbar-thin::-webkit-scrollbar-thumb {
-    background: #4A5568;
+    background: theme('colors.gray.700');
   }
 }
