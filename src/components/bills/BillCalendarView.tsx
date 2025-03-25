@@ -147,7 +147,12 @@ export function BillCalendarView({ bills, onAddBill, onTogglePaid, onEdit, onDel
                             {bill.isPaid ? "Unpaid" : "Paid"}
                           </Button>
                           
-                          <EditBillDialog bill={bill} onSave={onEdit} />
+                          {/* Here's the fix - we need to ensure the EditBillDialog's onSave prop 
+                              has the correct signature matching what EditBillDialog expects */}
+                          <EditBillDialog 
+                            bill={bill} 
+                            onSave={() => onEdit(bill)} 
+                          />
                           
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
