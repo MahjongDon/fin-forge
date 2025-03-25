@@ -60,7 +60,6 @@ function Calendar({
             {props.date.getDate()}
           </div>
         ),
-        // The Day component needs to explicitly set type="button" on the button element
         Day: (day) => (
           <button
             type="button"

@@ -967,10 +967,10 @@ function EditBillDialog({ bill, setBill, onSave, onDelete, categories }: EditBil
           <Trash2 className="h-4 w-4 mr-2" /> Delete
         </Button>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={() => {}} asChild>
-            <DialogClose>Cancel</DialogClose>
-          </Button>
-          <Button onClick={onSave}>
+          <DialogClose asChild>
+            <Button variant="outline" type="button">Cancel</Button>
+          </DialogClose>
+          <Button onClick={onSave} type="button">
             <Save className="h-4 w-4 mr-2" /> Save Changes
           </Button>
         </div>
@@ -978,3 +978,4 @@ function EditBillDialog({ bill, setBill, onSave, onDelete, categories }: EditBil
     </>
   );
 }
+
