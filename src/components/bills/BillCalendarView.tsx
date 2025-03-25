@@ -5,7 +5,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { Bill } from "./types";
+import { Bill, CATEGORIES } from "./types";
 import { Badge } from "@/components/ui/badge";
 import { EditBillDialog } from "./EditBillDialog";
 import { AddBillDialog } from "./AddBillDialog";
@@ -24,6 +24,7 @@ interface BillCalendarViewProps {
 export function BillCalendarView({ bills, onAddBill, onTogglePaid, onEdit, onDelete }: BillCalendarViewProps) {
   const [date, setDate] = useState<Date>(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
+  const [editingBill, setEditingBill] = useState<Bill | null>(null);
   
   const handleDateSelect = (day: Date | undefined) => {
     setSelectedDate(day);
@@ -147,11 +148,12 @@ export function BillCalendarView({ bills, onAddBill, onTogglePaid, onEdit, onDel
                             {bill.isPaid ? "Unpaid" : "Paid"}
                           </Button>
                           
-                          {/* Here's the fix - we need to ensure the EditBillDialog's onSave prop 
-                              has the correct signature matching what EditBillDialog expects */}
                           <EditBillDialog 
                             bill={bill} 
+                            setBill={setEditingBill}
                             onSave={() => onEdit(bill)} 
+                            onDelete={onDelete}
+                            categories={CATEGORIES}
                           />
                           
                           <AlertDialog>
