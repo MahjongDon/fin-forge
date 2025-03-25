@@ -62,14 +62,14 @@ export default function Layout({ children }: LayoutProps) {
                   key={item.path}
                   to={item.path}
                   className={cn(
-                    "flex flex-col items-center justify-center p-2 rounded-md transition-colors",
+                    "flex flex-col items-center justify-center py-2 px-3 rounded-md transition-colors",
                     isActive 
                       ? "text-finance-indigo" 
                       : "text-muted-foreground hover:text-foreground"
                   )}
                 >
-                  <item.icon className="h-5 w-5" />
-                  <span className="text-xs mt-1">{item.label}</span>
+                  <item.icon className="h-5 w-5 mb-1" />
+                  <span className="text-xs">{item.label}</span>
                 </Link>
               ) : (
                 <Link
@@ -120,7 +120,7 @@ export default function Layout({ children }: LayoutProps) {
           </div>
         </header>
         
-        <div className="container py-8 animate-fade-in">
+        <div className="container py-6 md:py-8 animate-fade-in">
           {children}
         </div>
       </main>
