@@ -836,4 +836,4 @@ interface EditBillDialogProps {
   bill: Bill | null;
   setBill: React.Dispatch<React.SetStateAction<Bill | null>>;
   onSave: () => void;
-  onDelete: (id: string) =>
+  onDelete: (id: string) => void;
