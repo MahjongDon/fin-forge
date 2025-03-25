@@ -46,7 +46,7 @@ export default function Layout({ children }: LayoutProps) {
               <div className="w-8 h-8 rounded-md bg-finance-indigo flex items-center justify-center">
                 <DollarSign className="h-5 w-5 text-white" />
               </div>
-              <h1 className="text-xl font-semibold tracking-tight">FinTrack</h1>
+              <h1 className="text-xl font-semibold tracking-tight">FinForge</h1>
             </div>
           )}
           
@@ -91,7 +91,7 @@ export default function Layout({ children }: LayoutProps) {
           
           {!isMobile && (
             <div className="mt-auto pt-4 flex justify-between items-center">
-              <span className="text-xs text-muted-foreground">© 2023 FinTrack</span>
+              <span className="text-xs text-muted-foreground">© 2024 FinForge</span>
               <ThemeToggle />
             </div>
           )}
@@ -110,7 +110,7 @@ export default function Layout({ children }: LayoutProps) {
                 <div className="w-8 h-8 rounded-md bg-finance-indigo flex items-center justify-center">
                   <DollarSign className="h-5 w-5 text-white" />
                 </div>
-                <h1 className="text-xl font-semibold tracking-tight">FinTrack</h1>
+                <h1 className="text-xl font-semibold tracking-tight">FinForge</h1>
               </div>
             )}
             <div className={cn("flex items-center gap-4", isMobile ? "ml-auto" : "")}>
