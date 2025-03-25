@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { format, isSameDay, isToday, isWithinInterval, addDays, addMonths, isAfter, isBefore, compareAsc, startOfMonth, endOfMonth, eachDayOfInterval, getDate, isSameMonth } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -967,9 +967,9 @@ function EditBillDialog({ bill, setBill, onSave, onDelete, categories }: EditBil
           <Trash2 className="h-4 w-4 mr-2" /> Delete
         </Button>
         <div className="flex gap-2">
-          <DialogClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DialogClose>
+          <Button variant="outline" onClick={() => {}} asChild>
+            <DialogClose>Cancel</DialogClose>
+          </Button>
           <Button onClick={onSave}>
             <Save className="h-4 w-4 mr-2" /> Save Changes
           </Button>
