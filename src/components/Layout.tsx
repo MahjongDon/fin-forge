@@ -85,7 +85,7 @@ export default function Layout({ children }: LayoutProps) {
                   <item.icon className="h-5 w-5" />
                   <span>{item.label}</span>
                 </Link>
-              )}
+              );
             })}
           </nav>
           
