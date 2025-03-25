@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { AlertTriangle, Calendar as CalendarIcon, ChevronLeft, ChevronRight, Edit, Plus, Save, Trash2 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -880,6 +881,7 @@ function EditBillDialog({ bill, setBill, onSave, onDelete, categories }: EditBil
               <Button
                 variant={"outline"}
                 className="justify-start text-left font-normal"
+                type="button"
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
                 {bill.dueDate ? (
@@ -978,4 +980,3 @@ function EditBillDialog({ bill, setBill, onSave, onDelete, categories }: EditBil
     </>
   );
 }
-
