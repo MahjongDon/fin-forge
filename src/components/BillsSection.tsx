@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { AlertTriangle, Calendar as CalendarIcon, ChevronLeft, ChevronRight, Edit, Plus, Save, Trash2 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
+import * as React from "react";
 
 // Define bill type
 interface Bill {
@@ -681,8 +681,7 @@ export default function BillsSection() {
                   onMonthChange={setCalendarDate}
                   className="rounded-md border"
                   components={{
-                    Day: (props) => {
-                      const date = props.date;
+                    Day: ({ date, ...props }) => {
                       const hasBills = bills.some(bill => isSameDay(bill.dueDate, date));
                       const hasOverdueBills = bills.some(bill => 
                         !bill.isPaid && isSameDay(bill.dueDate, date) && isBefore(date, new Date())
@@ -690,25 +689,29 @@ export default function BillsSection() {
                       const hasDueTodayBills = bills.some(bill => 
                         !bill.isPaid && isSameDay(bill.dueDate, date) && isToday(date)
                       );
-                      const dayProps = {
-                        ...props,
-                        className: cn(
-                          props.className,
-                          hasBills && !hasOverdueBills && !hasDueTodayBills && "!bg-finance-indigo/10 text-finance-indigo hover:bg-finance-indigo/20 focus:bg-finance-indigo/20",
-                          hasOverdueBills && "!bg-finance-red/10 text-finance-red hover:bg-finance-red/20 focus:bg-finance-red/20",
-                          hasDueTodayBills && "!bg-finance-yellow/10 text-finance-yellow hover:bg-finance-yellow/20 focus:bg-finance-yellow/20",
-                          props.selected && "!bg-finance-indigo text-white hover:!bg-finance-indigo hover:text-white focus:!bg-finance-indigo focus:text-white",
-                        ),
-                      }
-                      return <div className="relative">
-                        {hasBills && !props.selected && (
-                          <div className={cn(
-                            "w-1.5 h-1.5 rounded-full absolute -top-0.5 right-0",
-                            hasOverdueBills ? "bg-finance-red" : hasDueTodayBills ? "bg-finance-yellow" : "bg-finance-indigo"
-                          )} />
-                        )}
-                        {React.cloneElement(props.children, dayProps)}
-                      </div>
+                      
+                      return (
+                        <div className="relative">
+                          {hasBills && !props.selected && (
+                            <div className={cn(
+                              "w-1.5 h-1.5 rounded-full absolute -top-0.5 right-0",
+                              hasOverdueBills ? "bg-finance-red" : hasDueTodayBills ? "bg-finance-yellow" : "bg-finance-indigo"
+                            )} />
+                          )}
+                          <div
+                            {...props}
+                            className={cn(
+                              props.className,
+                              hasBills && !hasOverdueBills && !hasDueTodayBills && "!bg-finance-indigo/10 text-finance-indigo hover:bg-finance-indigo/20 focus:bg-finance-indigo/20",
+                              hasOverdueBills && "!bg-finance-red/10 text-finance-red hover:bg-finance-red/20 focus:bg-finance-red/20",
+                              hasDueTodayBills && "!bg-finance-yellow/10 text-finance-yellow hover:bg-finance-yellow/20 focus:bg-finance-yellow/20",
+                              props.selected && "!bg-finance-indigo text-white hover:!bg-finance-indigo hover:text-white focus:!bg-finance-indigo focus:text-white"
+                            )}
+                          >
+                            {props.children}
+                          </div>
+                        </div>
+                      );
                     },
                   }}
                 />
