@@ -3,7 +3,7 @@ import { useState } from "react";
 import Layout from "@/components/Layout";
 import Dashboard from "@/components/Dashboard";
 import BudgetSection from "@/components/BudgetSection";
-import BillsSection from "@/components/BillsSection";
+import BillsSection from "@/components/bills/BillsSection";
 import CurrencySection from "@/components/CurrencySection";
 import { useLocation } from "react-router-dom";
 
