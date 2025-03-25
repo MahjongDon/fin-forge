@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { AlertTriangle, Calendar as CalendarIcon, ChevronLeft, ChevronRight, Edit, Plus, Save, Trash2 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -13,7 +13,14 @@ import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import * as React from "react";
-import { DayProps } from "react-day-picker";
+
+interface CustomDayProps extends React.HTMLProps<HTMLButtonElement> {
+  date: Date;
+  displayMonth: Date;
+  selected?: boolean;
+  disabled?: boolean;
+  outside?: boolean;
+}
 
 interface Bill {
   id: string;
@@ -670,7 +677,7 @@ export default function BillsSection() {
                   onMonthChange={setCalendarDate}
                   className="rounded-md border"
                   components={{
-                    Day: (props: DayProps) => {
+                    Day: (props: CustomDayProps) => {
                       const { date, disabled, outside } = props;
                       const hasBills = bills.some(bill => isSameDay(bill.dueDate, date));
                       const hasOverdueBills = bills.some(bill => 
@@ -965,3 +972,4 @@ function EditBillDialog({ bill, setBill, onSave, onDelete, categories }: EditBil
     </>
   );
 }
+
